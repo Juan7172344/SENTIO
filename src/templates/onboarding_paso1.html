@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SENTIO — Paso 1 de 3</title>
+    <link rel="stylesheet" href="/static/css/sentio.css" />
+  </head>
+  <body class="sentio">
+    <div class="sentio-shell">
+      {% from "macros.html" import brand_header, progress_bar %}
+      {{ brand_header() }}
+      {{ progress_bar(1) }}
+
+      <div class="section-icon" style="background: rgba(124, 58, 237, 0.12)">&#10024;</div>
+      <h2 class="section-title">¡Bienvenido! &#128075;</h2>
+      <p class="section-sub">Personaliza tu experiencia en solo unos pasos</p>
+
+      <form method="post" action="/onboarding/paso-1" novalidate>
+        <div class="field-card">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#128100;</span>
+            <label for="age">Edad</label>
+          </div>
+          <input class="in-text" id="age" name="age" type="number" min="16" max="90" required placeholder="Ej: 21" value="{{ values.get('age', '') }}" />
+          {% if errors.get('age') %}<div class="error" role="alert">{{ errors.age }}</div>{% endif %}
+        </div>
+
+        <div class="field-card">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#127891;</span>
+            <label for="career">Carrera universitaria</label>
+          </div>
+          <input class="in-text" id="career" name="career" type="text" autocomplete="organization-title" placeholder="Ej: Ingeniería en Sistemas" value="{{ values.get('career', '') }}" />
+          {% if errors.get('career') %}<div class="error" role="alert">{{ errors.career }}</div>{% endif %}
+        </div>
+
+        <div class="field-card">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#128218;</span>
+            <label for="semester">Semestre actual</label>
+          </div>
+          <input class="in-text" id="semester" name="semester" type="number" min="1" max="20" required placeholder="Ej: 5" value="{{ values.get('semester', '') }}" />
+          {% if errors.get('semester') %}<div class="error" role="alert">{{ errors.semester }}</div>{% endif %}
+        </div>
+
+        <button class="btn-gradient" type="submit">Continuar &#8594;</button>
+      </form>
+
+      <p class="disclaimer">Esta aplicación es orientativa y no constituye diagnóstico clínico.</p>
+    </div>
+  </body>
+</html>

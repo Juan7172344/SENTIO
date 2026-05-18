@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SENTIO — Registro diario</title>
+    <link rel="stylesheet" href="/static/css/sentio.css" />
+  </head>
+  <body class="sentio">
+    <div class="sentio-shell">
+      <a class="back-link" href="/inicio">&#8592; Volver al inicio</a>
+      <h1 class="section-title" style="text-align: left; margin-top: 0">Registro diario</h1>
+      <p class="section-sub" style="text-align: left">¿Cómo fue tu día?</p>
+      
+      <form method="post" action="/registro">
+        
+        <!-- Ánimo -->
+        <div class="field-card">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#10024;</span>
+            <label>Estado de ánimo</label>
+          </div>
+          <p style="margin: 0 0 0.5rem; font-size: 0.8rem; color: var(--muted);">¿Cómo te sientes hoy?</p>
+          <div class="mood-selector">
+            <input type="radio" name="mood" id="m1" value="1" required>
+            <label for="m1"><span class="emoji">&#128546;</span><span class="lbl">Muy mal</span></label>
+            
+            <input type="radio" name="mood" id="m2" value="2">
+            <label for="m2"><span class="emoji">&#128532;</span><span class="lbl">Mal</span></label>
+            
+            <input type="radio" name="mood" id="m3" value="3" checked>
+            <label for="m3"><span class="emoji">&#128528;</span><span class="lbl">Normal</span></label>
+            
+            <input type="radio" name="mood" id="m4" value="4">
+            <label for="m4"><span class="emoji">&#128578;</span><span class="lbl">Bien</span></label>
+            
+            <input type="radio" name="mood" id="m5" value="5">
+            <label for="m5"><span class="emoji">&#128513;</span><span class="lbl">Excelente</span></label>
+          </div>
+        </div>
+
+        <!-- Energía -->
+        <div class="field-card">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#9889;</span>
+            <label>Nivel de energía</label>
+          </div>
+          <p style="margin: 0 0 0.5rem; font-size: 0.8rem; color: var(--muted);">¿Qué tanta energía tuviste?</p>
+          <div class="mood-selector">
+            <input type="radio" name="energy" id="e1" value="1" required>
+            <label for="e1"><span class="emoji">&#128267;</span><span class="lbl">Muy baja</span></label>
+            
+            <input type="radio" name="energy" id="e2" value="2">
+            <label for="e2"><span class="emoji">&#128267;</span><span class="lbl">Baja</span></label>
+            
+            <input type="radio" name="energy" id="e3" value="3" checked>
+            <label for="e3"><span class="emoji">&#9889;</span><span class="lbl">Media</span></label>
+            
+            <input type="radio" name="energy" id="e4" value="4">
+            <label for="e4"><span class="emoji">&#10024;</span><span class="lbl">Alta</span></label>
+            
+            <input type="radio" name="energy" id="e5" value="5">
+            <label for="e5"><span class="emoji">&#127775;</span><span class="lbl">Muy alta</span></label>
+          </div>
+        </div>
+
+        <!-- Sueño -->
+        <div class="field-card">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#127183;</span>
+            <label>Horas de sueño</label>
+          </div>
+          <p style="margin: 0 0 0.5rem; font-size: 0.8rem; color: var(--muted);">¿Cuánto dormiste?</p>
+          <div class="range-top">
+            <span></span>
+            <span class="range-val sleep" id="val_sleep">7.0</span>
+          </div>
+          <input type="range" class="sentio-range" name="sleep_hours" id="in_sleep" min="0" max="24" step="0.5" value="7" oninput="document.getElementById('val_sleep').innerText=this.value">
+          <div class="range-labels">
+            <span>0h</span><span>24h</span>
+          </div>
+        </div>
+
+        <!-- Estrés -->
+        <div class="field-card">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#129416;</span>
+            <label>Nivel de estrés</label>
+          </div>
+          <p style="margin: 0 0 0.5rem; font-size: 0.8rem; color: var(--muted);">¿Qué tan estresado estuviste?</p>
+          <div class="range-top">
+            <span></span>
+            <span class="range-val stress" id="val_stress">5/10</span>
+          </div>
+          <input type="range" class="sentio-range" name="stress_level" id="in_stress" min="1" max="10" step="1" value="5" oninput="document.getElementById('val_stress').innerText=this.value + '/10'">
+          <div class="range-labels">
+            <span>Bajo</span><span>Alto</span>
+          </div>
+        </div>
+
+        <!-- Actividades -->
+        <div class="field-card">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#10004;&#65039;</span>
+            <label>Actividades de hoy</label>
+          </div>
+          <p style="margin: 0 0 0.5rem; font-size: 0.8rem; color: var(--muted);">Selecciona las que hiciste</p>
+          <div class="activities-grid">
+            <input type="checkbox" name="activities" value="Estudio" id="a1">
+            <label for="a1"><span class="ico">&#128214;</span><span class="lbl">Estudio</span></label>
+
+            <input type="checkbox" name="activities" value="Ejercicio" id="a2">
+            <label for="a2"><span class="ico">&#127947;&#65039;</span><span class="lbl">Ejercicio</span></label>
+
+            <input type="checkbox" name="activities" value="Descanso" id="a3">
+            <label for="a3"><span class="ico">&#9749;</span><span class="lbl">Descanso</span></label>
+
+            <input type="checkbox" name="activities" value="Social" id="a4">
+            <label for="a4"><span class="ico">&#128101;</span><span class="lbl">Social</span></label>
+          </div>
+        </div>
+        
+        {% if error %}
+        <div class="error" style="text-align: center; margin-bottom: 1rem;">{{ error }}</div>
+        {% endif %}
+
+        <button class="btn-gradient" type="submit">&#10003; Guardar mi día</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SENTIO — Análisis Semanal</title>
+    <link rel="stylesheet" href="/static/css/sentio.css" />
+    <style>
+      .chart-container {
+        position: relative;
+        height: 200px;
+        width: 100%;
+        margin-top: 1rem;
+        background-image: linear-gradient(to bottom, #f3f4f6 1px, transparent 1px);
+        background-size: 100% 33.33%;
+      }
+      .chart-container::before, .chart-container::after {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; height: 1px; background: #e5e7eb;
+      }
+      .chart-container::before { top: 0; }
+      .chart-container::after { bottom: 0; }
+      
+      .chart-labels-y {
+        position: absolute;
+        left: -20px;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 0.7rem;
+        color: var(--muted);
+      }
+      
+      .chart-labels-x {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.5rem;
+        font-size: 0.7rem;
+        color: var(--muted);
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      
+      svg.chart-line {
+        position: absolute;
+        top: 0; left: 20px; width: calc(100% - 40px); height: 100%;
+        overflow: visible;
+      }
+    </style>
+  </head>
+  <body class="sentio">
+    <div class="sentio-shell">
+      <a class="back-link" href="/inicio">&#8592; Volver al inicio</a>
+      <h1 class="section-title" style="text-align: left; margin-top: 0">Análisis Semanal</h1>
+      <p class="section-sub" style="text-align: left">Últimos 7 días</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem;">
+        
+        <div class="stat-card" style="text-align: left; padding: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.75rem; font-weight: 600; color: var(--muted);">Ánimo promedio</span>
+            <span style="background: #dcfce7; color: #16a34a; border-radius: 50%; width: 24px; height: 24px; display: grid; place-items: center; font-size: 0.7rem;">&#8599;&#65039;</span>
+          </div>
+          <div style="font-size: 2rem; font-weight: 800; color: #c026d3; line-height: 1;">{{ "%.1f"|format(metrics.avg_mood|default(0)) }}</div>
+          <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem;">de 5</div>
+        </div>
+
+        <div class="stat-card" style="text-align: left; padding: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.75rem; font-weight: 600; color: var(--muted);">Estrés promedio</span>
+            <span style="background: #fee2e2; color: #dc2626; border-radius: 50%; width: 24px; height: 24px; display: grid; place-items: center; font-size: 0.7rem;">&#8599;&#65039;</span>
+          </div>
+          <div style="font-size: 2rem; font-weight: 800; color: #ea580c; line-height: 1;">{{ "%.1f"|format(metrics.avg_stress|default(0)) }}</div>
+          <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem;">de 10</div>
+        </div>
+
+        <div class="stat-card" style="text-align: left; padding: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.75rem; font-weight: 600; color: var(--muted);">Sueño promedio</span>
+          </div>
+          <div style="font-size: 2rem; font-weight: 800; color: #2563eb; line-height: 1;">{{ "%.1f"|format(metrics.avg_sleep|default(0)) }}</div>
+          <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem;">horas</div>
+        </div>
+
+        <div class="stat-card" style="text-align: left; padding: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.75rem; font-weight: 600; color: var(--muted);">Energía promedio</span>
+          </div>
+          <div style="font-size: 2rem; font-weight: 800; color: #16a34a; line-height: 1;">{{ "%.1f"|format(metrics.avg_energy|default(0)) }}</div>
+          <div style="font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem;">de 5</div>
+        </div>
+
+      </div>
+
+      <!-- Gráfica Ánimo y Estrés -->
+      <div class="field-card">
+        <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;">
+          <div style="width: 32px; height: 32px; border-radius: 8px; background: #fdf4ff; color: #c026d3; display: grid; place-items: center; font-size: 1rem;">&#129416;</div>
+          <h3 style="margin: 0; font-size: 1rem;">Ánimo y Estrés</h3>
+        </div>
+        
+        <div style="padding-left: 20px;">
+          <div class="chart-container">
+            <div class="chart-labels-y">
+              <span>10</span><span>5</span><span>0</span>
+            </div>
+            
+            <svg class="chart-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <!-- Ánimo Line (scaled from 1-5 to 0-100 where 5 is 0 and 1 is 100) -->
+              <polyline points="0,40 16,30 33,30 50,20 66,20 83,25 100,45" fill="none" stroke="#a855f7" stroke-width="2"/>
+              <circle cx="0" cy="40" r="2.5" fill="#a855f7" />
+              <circle cx="16" cy="30" r="2.5" fill="#a855f7" />
+              <circle cx="33" cy="30" r="2.5" fill="#a855f7" />
+              <circle cx="50" cy="20" r="2.5" fill="#a855f7" />
+              <circle cx="66" cy="20" r="2.5" fill="#a855f7" />
+              <circle cx="83" cy="25" r="2.5" fill="#a855f7" />
+              <circle cx="100" cy="45" r="2.5" fill="#a855f7" />
+
+              <!-- Estrés Line (scaled from 1-10 to 0-100 where 10 is 0 and 1 is 100) -->
+              <polyline points="0,70 16,60 33,40 50,60 66,40 83,40 100,50" fill="none" stroke="#f97316" stroke-width="2"/>
+              <circle cx="0" cy="70" r="2.5" fill="#f97316" />
+              <circle cx="16" cy="60" r="2.5" fill="#f97316" />
+              <circle cx="33" cy="40" r="2.5" fill="#f97316" />
+              <circle cx="50" cy="60" r="2.5" fill="#f97316" />
+              <circle cx="66" cy="40" r="2.5" fill="#f97316" />
+              <circle cx="83" cy="40" r="2.5" fill="#f97316" />
+              <circle cx="100" cy="50" r="2.5" fill="#f97316" />
+            </svg>
+          </div>
+          <div class="chart-labels-x">
+            <span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
+          </div>
+          
+          <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; font-size: 0.75rem; font-weight: 600;">
+            <span style="color: #a855f7;">&#9679; Ánimo</span>
+            <span style="color: #f97316;">&#9679; Estrés</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SENTIO — Evaluación de IA</title>
+    <link rel="stylesheet" href="/static/css/sentio.css" />
+  </head>
+  <body class="sentio">
+    <div class="sentio-shell" style="text-align: center;">
+      <a class="back-link" href="/inicio" style="display: block; text-align: left;">&#8592; Volver al inicio</a>
+      
+      <div style="width: 56px; height: 56px; border-radius: 14px; background: rgba(124, 58, 237, 0.1); display: grid; place-items: center; margin: 0 auto 1rem; color: var(--purple); font-size: 1.75rem;">
+        &#129416;
+      </div>
+      <h1 style="margin: 0 0 0.25rem;">Evaluación de IA</h1>
+      <p style="color: var(--muted); margin: 0 0 1.5rem; font-size: 0.9rem;">Análisis de tu bienestar emocional</p>
+      
+      <div class="risk-eval-card {{ 'bajo' if risk_level == 'Bajo' else ('medio' if risk_level == 'Medio' else 'alto') }}">
+        <div class="risk-ico">
+          {% if risk_level == 'Bajo' %}&#10004;&#65039;
+          {% elif risk_level == 'Medio' %}!
+          {% else %}&#9888;&#65039;{% endif %}
+        </div>
+        
+        <h2>Riesgo {{ risk_level }}</h2>
+        
+        <div class="insight-box" style="
+          {% if risk_level == 'Bajo' %}background: #f0fdf4; border-color: #86efac; color: #166534;
+          {% elif risk_level == 'Medio' %}background: #fffbeb; border-color: #fde047; color: #854d0e;
+          {% else %}background: #fef2f2; border-color: #fca5a5; color: #991b1b;{% endif %}
+        ">
+          <p style="color: inherit;">
+            {% if explanation %}
+              {{ explanation }}
+            {% else %}
+              {% if risk_level == 'Bajo' %}
+                Tus indicadores muestran un equilibrio positivo en tu bienestar emocional. ¡Sigue así!
+              {% elif risk_level == 'Medio' %}
+                Algunos indicadores sugieren áreas de oportunidad en tu bienestar emocional.
+              {% else %}
+                Existen señales de alerta en tu bienestar emocional que requieren atención inmediata.
+              {% endif %}
+            {% endif %}
+          </p>
+        </div>
+        
+        <div style="margin-top: 1.5rem; text-align: left; background: var(--bg); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+          <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(124, 58, 237, 0.1); display: grid; place-items: center; color: var(--purple); font-size: 1.1rem; flex-shrink: 0;">
+              &#10024;
+            </div>
+            <div>
+              <h4 style="margin: 0 0 0.25rem; font-size: 0.85rem;">Recomendación</h4>
+              <p style="margin: 0; font-size: 0.8rem; color: var(--muted);">
+                {% if risk_level == 'Bajo' %}Continúa con tus hábitos actuales, están funcionando bien para ti.{% elif risk_level == 'Medio' %}Presta especial atención a tus patrones de sueño, estrés y actividades diarias.{% else %}Te recomendamos buscar apoyo en amigos, familiares o en el área de bienestar universitario.{% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="/recomendaciones" class="btn-gradient" style="display: block; text-decoration: none;">Ver mis recomendaciones &rarr;</a>
+      
+      <p class="disclaimer">Esta evaluación es orientativa y no constituye un diagnóstico clínico.</p>
+    </div>
+  </body>
+</html>

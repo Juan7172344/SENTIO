@@ -1,0 +1,18 @@
+{# step: 1|2|3 #}
+{% macro progress_bar(step) %}
+<div class="progress-track" role="progressbar" aria-valuenow="{{ step }}" aria-valuemin="1" aria-valuemax="3" aria-label="Progreso del perfil">
+  <div class="progress-seg {% if step >= 1 %}on{% endif %}"></div>
+  <div class="progress-seg {% if step >= 2 %}on{% endif %}"></div>
+  <div class="progress-seg {% if step >= 3 %}on{% endif %}"></div>
+</div>
+<div class="progress-meta">
+  <span>Paso {{ step }} de 3</span>
+  <span>{% if step == 1 %}33%{% elif step == 2 %}67%{% else %}100%{% endif %}</span>
+</div>
+{% endmacro %}
+
+{% macro brand_header() %}
+<div class="brand-logo" aria-hidden="true"><span>&#9829;</span></div>
+<h1 class="brand-title">SENTIO</h1>
+<p class="brand-tagline">Tu compañero de bienestar emocional</p>
+{% endmacro %}

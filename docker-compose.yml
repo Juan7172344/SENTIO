@@ -1,0 +1,11 @@
+# Esqueleto para evolución a API + DB en contenedores.
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./model/artifacts:/app/model/artifacts

@@ -1,0 +1,10 @@
+[project]
+name = "sentio"
+version = "0.1.0"
+description = "SENTIO — monitoreo del bienestar emocional estudiantil"
+readme = "README.md"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SENTIO — Paso 2 de 3</title>
+    <link rel="stylesheet" href="/static/css/sentio.css" />
+  </head>
+  <body class="sentio">
+    <div class="sentio-shell">
+      {% from "macros.html" import brand_header, progress_bar %}
+      {{ brand_header() }}
+      {{ progress_bar(2) }}
+
+      <a class="back-link" href="/onboarding/paso-1">&#8592; Atrás</a>
+
+      <div class="section-icon" style="background: rgba(37, 99, 235, 0.12)">&#127769;</div>
+      <h2 class="section-title">Tu rutina actual</h2>
+      <p class="section-sub">Ayúdanos a conocer tu estado de bienestar</p>
+
+      <form method="post" action="/onboarding/paso-2" novalidate>
+        <div class="field-card" style="background: linear-gradient(180deg, #eff6ff 0%, #fff 40%)">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#127769;</span>
+            <label for="habitual_sleep_hours">Horas de sueño promedio</label>
+          </div>
+          <div class="range-top">
+            <span></span>
+            <span class="range-val sleep" id="sleep_out">{{ sleep_display }}h</span>
+          </div>
+          <input
+            class="sentio-range"
+            id="habitual_sleep_hours"
+            name="habitual_sleep_hours"
+            type="range"
+            min="4"
+            max="12"
+            step="0.25"
+            value="{{ habitual_sleep_hours }}"
+            oninput="document.getElementById('sleep_out').textContent = parseFloat(this.value).toString().replace(/\.0$/, '') + 'h'"
+          />
+          <div class="range-labels"><span>4 horas</span><span>12 horas</span></div>
+          {% if errors.get('habitual_sleep_hours') %}<div class="error" role="alert">{{ errors.habitual_sleep_hours }}</div>{% endif %}
+        </div>
+
+        <div class="field-card" style="background: linear-gradient(180deg, #fff7ed 0%, #fff 40%)">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#129504;</span>
+            <label for="base_academic_stress">Nivel de estrés actual</label>
+          </div>
+          <div class="range-top">
+            <span></span>
+            <span class="range-val stress" id="stress_out">{{ base_academic_stress }} / 10</span>
+          </div>
+          <input
+            class="sentio-range"
+            id="base_academic_stress"
+            name="base_academic_stress"
+            type="range"
+            min="1"
+            max="10"
+            step="1"
+            value="{{ base_academic_stress }}"
+            oninput="document.getElementById('stress_out').textContent = this.value + ' / 10'"
+          />
+          <div class="range-labels"><span>Muy bajo</span><span>Muy alto</span></div>
+          {% if errors.get('base_academic_stress') %}<div class="error" role="alert">{{ errors.base_academic_stress }}</div>{% endif %}
+        </div>
+
+        <button class="btn-gradient" type="submit">Continuar &#8594;</button>
+      </form>
+
+      <p class="disclaimer">Esta aplicación es orientativa y no constituye diagnóstico clínico.</p>
+    </div>
+  </body>
+</html>

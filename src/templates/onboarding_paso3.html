@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SENTIO — Paso 3 de 3</title>
+    <link rel="stylesheet" href="/static/css/sentio.css" />
+  </head>
+  <body class="sentio">
+    <div class="sentio-shell">
+      {% from "macros.html" import brand_header, progress_bar %}
+      {{ brand_header() }}
+      {{ progress_bar(3) }}
+
+      <a class="back-link" href="/onboarding/paso-2">&#8592; Atrás</a>
+
+      <div class="section-icon" style="background: rgba(22, 163, 74, 0.12)">&#128200;</div>
+      <h2 class="section-title">Actividad física</h2>
+      <p class="section-sub">Último paso para completar tu perfil</p>
+
+      <form method="post" action="/onboarding/paso-3" novalidate>
+        <div class="field-card" style="background: linear-gradient(180deg, #f0fdf4 0%, #fff 45%)">
+          <div class="field-row">
+            <span class="ico" aria-hidden="true">&#128200;</span>
+            <label for="physical_activity_days_per_week">Días de ejercicio por semana</label>
+          </div>
+          <div class="range-top">
+            <span></span>
+            <span class="range-val act" id="act_out">{{ physical_activity_days_per_week }}</span>
+          </div>
+          <input
+            class="sentio-range"
+            id="physical_activity_days_per_week"
+            name="physical_activity_days_per_week"
+            type="range"
+            min="0"
+            max="7"
+            step="1"
+            value="{{ physical_activity_days_per_week }}"
+            oninput="document.getElementById('act_out').textContent = this.value"
+          />
+          <div class="range-labels"><span>Ningún día</span><span>Todos los días</span></div>
+          {% if errors.get('physical_activity_days_per_week') %}
+          <div class="error" role="alert">{{ errors.physical_activity_days_per_week }}</div>
+          {% endif %}
+        </div>
+
+        <div class="hint-card">
+          <strong>&#10024; ¡Todo listo!</strong>
+          <span style="color: var(--muted); font-size: 0.9rem">Ahora podrás registrar tus días y recibir recomendaciones personalizadas de IA.</span>
+        </div>
+
+        <button class="btn-gradient" type="submit">Comenzar mi viaje &#8594;</button>
+      </form>
+
+      <p class="disclaimer">Esta aplicación es orientativa y no constituye diagnóstico clínico.</p>
+    </div>
+  </body>
+</html>

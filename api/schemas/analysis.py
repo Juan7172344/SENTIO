@@ -1,0 +1,1 @@
+"""Esquemas de análisis (placeholder)."""

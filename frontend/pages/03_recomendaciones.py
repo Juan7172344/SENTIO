@@ -1,0 +1,1 @@
+"""Página de recomendaciones (placeholder)."""

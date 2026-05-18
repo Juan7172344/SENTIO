@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SENTIO — Resumen de hoy</title>
+    <link rel="stylesheet" href="/static/css/sentio.css" />
+  </head>
+  <body class="sentio">
+    <div class="sentio-shell" style="text-align: center;">
+      <div style="font-size: 3rem; margin: 1rem 0 0.5rem;">&#127881;</div>
+      <h1 style="margin: 0 0 0.25rem;">¡Excelente!</h1>
+      <p style="color: var(--muted); margin: 0 0 1.5rem;">Tu día ha sido registrado con éxito</p>
+      
+      <div class="field-card" style="text-align: left; padding: 1.25rem; margin-bottom: 1.5rem;">
+        <div class="tips-head" style="margin-bottom: 1rem;">
+          <span class="ico" style="background: rgba(124, 58, 237, 0.1); color: var(--purple); padding: 0.5rem; border-radius: 8px;">&#10024;</span>
+          <span style="font-size: 1.1rem;">Resumen de hoy</span>
+        </div>
+        
+        <div style="background: rgba(124, 58, 237, 0.05); padding: 0.8rem; border-radius: 8px; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: 600; font-size: 0.9rem; color: var(--text);">Estado de ánimo</span>
+          <strong style="color: var(--purple);">
+            {% if record.mood == 1 %}&#128546; Muy mal
+            {% elif record.mood == 2 %}&#128532; Mal
+            {% elif record.mood == 3 %}&#128528; Normal
+            {% elif record.mood == 4 %}&#128578; Bien
+            {% else %}&#128513; Excelente{% endif %}
+          </strong>
+        </div>
+        
+        <div style="background: rgba(234, 88, 12, 0.05); padding: 0.8rem; border-radius: 8px; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-weight: 600; font-size: 0.9rem; color: var(--text);">Nivel de energía</span>
+          <strong style="color: #ea580c;">
+            {% if record.energy == 1 %}Muy baja
+            {% elif record.energy == 2 %}Baja
+            {% elif record.energy == 3 %}Media
+            {% elif record.energy == 4 %}Alta
+            {% else %}Muy alta{% endif %}
+          </strong>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+          <div style="background: rgba(37, 99, 235, 0.05); padding: 0.8rem; border-radius: 8px;">
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 0.25rem;">Sueño</div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #2563eb;">{{ "%.1f"|format(record.sleep_hours) }}h</div>
+          </div>
+          <div style="background: rgba(234, 88, 12, 0.05); padding: 0.8rem; border-radius: 8px;">
+            <div style="font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 0.25rem;">Estrés</div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #ea580c;">{{ record.stress_level }}/10</div>
+          </div>
+        </div>
+
+        <div style="background: rgba(74, 222, 128, 0.05); padding: 0.8rem; border-radius: 8px;">
+          <div style="font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 0.5rem;">Actividades de hoy</div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            {% for act in record.activities %}
+            <span style="background: white; border: 1px solid #4ade80; color: #16a34a; font-size: 0.8rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 99px;">{{ act }}</span>
+            {% else %}
+            <span style="font-size: 0.85rem; color: var(--muted);">Ninguna registrada</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="field-card" style="text-align: left; padding: 1.25rem; display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem;">
+        <div style="width: 48px; height: 48px; border-radius: 50%; background: #e0e7ff; color: #4f46e5; display: grid; place-items: center; font-size: 1.5rem; flex-shrink: 0;">
+          &#129302;
+        </div>
+        <div>
+          <h3 style="margin: 0 0 0.25rem; font-size: 0.95rem;">Análisis en proceso</h3>
+          <p style="margin: 0; font-size: 0.8rem; color: var(--muted);">Nuestra IA está analizando tus datos para brindarte insights personalizados</p>
+        </div>
+      </div>
+
+      <a href="/evaluacion" class="btn-gradient" style="display: block; text-decoration: none;">Ver evaluación de IA &rarr;</a>
+      
+      <div style="margin-top: 1.5rem;">
+        <a href="/inicio" style="color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 600;">Volver al inicio</a>
+      </div>
+    </div>
+  </body>
+</html>

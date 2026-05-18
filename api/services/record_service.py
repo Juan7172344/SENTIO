@@ -1,0 +1,1 @@
+"""Servicio de registros (placeholder)."""

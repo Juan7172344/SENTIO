@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SENTIO — Inicio</title>
+    <link rel="stylesheet" href="/static/css/sentio.css" />
+  </head>
+  <body class="sentio" data-profile-id="{{ profile.id }}">
+    <div class="sentio-shell">
+      {% if welcome_career %}
+      <p style="text-align: center; background: var(--gradient-soft); border-radius: 12px; padding: 0.65rem; font-size: 0.9rem; margin: 0 0 1rem; border: 1px solid rgba(124, 58, 237, 0.2)">
+        &#127881; Perfil creado. ¡Bienvenido, estudiante de <strong>{{ welcome_career }}</strong>!
+      </p>
+      {% endif %}
+
+      <header class="dash-header">
+        <div>
+          <h1 class="dash-title">SENTIO</h1>
+          <p class="dash-career"><span aria-hidden="true">&#127891;</span> {{ profile.career }}</p>
+        </div>
+        <button type="button" class="dash-heart" title="Bienestar" aria-label="Bienestar"><span>&#9829;</span></button>
+      </header>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div aria-hidden="true">&#128200;</div>
+          <div class="num">{{ racha }}</div>
+          <div class="lbl">Racha</div>
+        </div>
+        <div class="stat-card">
+          <div aria-hidden="true">&#128197;</div>
+          <div class="num">{{ esta_semana }}</div>
+          <div class="lbl">Esta semana</div>
+        </div>
+        <div class="stat-card">
+          <div aria-hidden="true">&#128200;</div>
+          <div class="num" style="font-size: 0.95rem">Nuevo</div>
+          <div class="lbl">Nivel</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; margin-bottom: 0.75rem">
+        <a href="/analisis" class="btn-gradient" style="text-align: center; text-decoration: none; padding: 0.75rem; font-size: 0.85rem;">&#128200; Análisis Semanal</a>
+        <a href="/recomendaciones" class="btn-gradient" style="text-align: center; text-decoration: none; padding: 0.75rem; font-size: 0.85rem; background: #ec4899;">&#10024; Recomendaciones</a>
+      </div>
+
+      <div class="banner-motivation">
+        <div class="star" aria-hidden="true">&#127775;</div>
+        <div>
+          <strong>Cada día es una nueva oportunidad</strong>
+          <span>Refleja sobre tu bienestar</span>
+        </div>
+      </div>
+
+      {% if registered_today %}
+      <div class="hero-cta" style="background: var(--gradient-soft); border: 1px solid var(--border);">
+        <div class="cal" aria-hidden="true">&#10004;&#65039;</div>
+        <h2>¡Ya registraste tu día!</h2>
+        <p>Gracias por cuidarte. Vuelve mañana para continuar tu racha.</p>
+        <a class="btn-gradient" href="/resumen" style="display: inline-block; text-align: center; text-decoration: none">Ver resumen de hoy</a>
+      </div>
+      {% else %}
+      <div class="hero-cta">
+        <div class="cal" aria-hidden="true">&#128197;</div>
+        <h2>Tu registro diario</h2>
+        <p>Empieza tu viaje de autoconocimiento. Solo toma 30 segundos.</p>
+        <a class="btn-gradient" href="/registro" style="display: inline-block; text-align: center; text-decoration: none">&#43; Registrar hoy</a>
+      </div>
+      {% endif %}
+
+      <p class="tips-head"><span aria-hidden="true">&#9728;&#65039;</span> Tips para tu bienestar</p>
+      <div class="tip-card">
+        <strong>&#128161; Registra antes de dormir</strong>
+        <span>Reflexionar al final del día te ayuda a procesar emociones con más claridad.</span>
+      </div>
+
+      <details style="margin-top: 1rem; font-size: 0.85rem; color: var(--muted)">
+        <summary style="cursor: pointer; font-weight: 600">Tu perfil (resumen)</summary>
+        <ul style="margin: 0.5rem 0 0; padding-left: 1.2rem">
+          <li>Edad: {{ profile.age }}</li>
+          <li>Semestre: {{ profile.semester }}</li>
+          <li>Sueño habitual: {{ "%.2f"|format(profile.habitual_sleep_hours) }} h</li>
+          <li>Estrés base: {{ profile.base_academic_stress }} / 10</li>
+          <li>Actividad física: {{ profile.physical_activity_days_per_week }} días / semana</li>
+        </ul>
+      </details>
+
+      {% if show_dev_reset %}
+      <div class="dev-bar">
+        <form method="post" action="/dev/reset-perfil">
+          <button class="btn-muted" type="submit">[Desarrollo] Borrar perfil y repetir onboarding</button>
+        </form>
+      </div>
+      {% endif %}
+
+      <p class="disclaimer">Esta evaluación es orientativa y no constituye un diagnóstico clínico.</p>
+    </div>
+  </body>
+</html>
